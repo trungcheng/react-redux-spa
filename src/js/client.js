@@ -2,23 +2,31 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-import Header from './components/header';
-import Footer from './components/footer';
+import MainLayout from './components/mainLayout';
+import SearchLayout from './components/searchLayout';
+import UserDetail from './components/userDetail';
 
-import PageOne from './pages/pageOne';
-import PageTwo from './pages/pageTwo';
+import Users from './pages/users';
+import Applicants from './pages/applicants';
 import Home from './pages/home';
-import PageThree from './pages/pageThree';
 
 const frame = document.getElementById('root');
 
 render((
   	<Router history={ hashHistory }>
-  		<Route component={ Header }>
+  		<Route component={ MainLayout }>
     		<Route path="/" component={ Home } />
-    		<Route path="pageone" component={ PageOne } />
-    		<Route path="pagetwo" component={ PageTwo } />
-    		<Route path="pagethree" component={ PageThree } />
+    		<Route path="users">
+    			<Route component={ SearchLayout }>
+    				<IndexRoute component={ Users } />
+    			</Route>
+    			<Route path=":userId" component={ UserDetail } />
+    		</Route>
+    		<Route path="applicants">
+    			<Route component={ SearchLayout }>
+    				<IndexRoute component={ Applicants } />
+    			</Route>
+    		</Route>
     	</Route>
   	</Router>
 ), frame);

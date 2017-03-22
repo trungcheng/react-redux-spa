@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-export default class Header extends React.Component {
+export default class MainLayout extends React.Component {
 	render () {
 		return (
 			<div>
@@ -10,9 +10,8 @@ export default class Header extends React.Component {
 						<a className="navbar-brand" href="/">Title</a>
 						<ul className="nav navbar-nav">
 							<li><Link to="/" activeClassName="active">Home</Link></li>
-							<li><Link to="/pageone" activeClassName="active">Page One</Link></li>
-							<li><Link to="/pagetwo" activeClassName="active">Page Two</Link></li>
-							<li><Link to="/pagethree" activeClassName="active">Page Three</Link></li>
+							<li><Link to="/users" activeClassName="active">Users</Link></li>
+							<li><Link to="/applicants" activeClassName="active">Applicants</Link></li>
 						</ul>
 					</div>
 				</nav>
