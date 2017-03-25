@@ -1,10 +1,10 @@
 var gulp = require('gulp');
+var cp = require('child_process');
 var del = require('del');
 var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.config.js');
 var nodemon = require('gulp-nodemon');
-var path = require('path');
-
+var rename = require('gulp-rename');
 
 /**
  * Build (Webpack)
@@ -29,6 +29,22 @@ gulp.task('watch:build', function() {
 
 
 /**
+ * API Server (Database)
+ */
+
+gulp.task('restore-database', function() {
+  return gulp.src('./data/restore.json')
+    .pipe(rename('db.json'))
+    .pipe(gulp.dest('./data'));
+});
+
+gulp.task('serve:api', ['restore-database'], function(done) {
+  cp.exec('node ./node_modules/json-server/bin/index.js --watch ./data/db.json --port 3001', {stdio: 'inherit'})
+    .on('close', done);
+});
+
+
+/**
  * Node Server (Express)
  */
 
@@ -45,6 +61,6 @@ gulp.task('serve:node', function(done) {
  * Main tasks
  */
 
-gulp.task('serve', ['serve:node']);
+gulp.task('serve', ['serve:node', 'serve:api']);
 gulp.task('watch', ['build', 'watch:build']);
 gulp.task('default', ['serve']);
